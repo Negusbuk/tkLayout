@@ -20,9 +20,10 @@ namespace insur {
      */
     enum ShapeType { bx, tb, co, tp, pc };
 
-    enum ShapeOperationType { uni, intersec };
+    enum ShapeOperationType { uni, intersec, substract };
 
     enum AlgoPartype { st,num,vec};
+
     /**
      * @struct Rotation
      * @brief This struct collects the parameters that describe a rotation in 3D.
@@ -139,12 +140,14 @@ namespace insur {
      * @param name_tag The name of the result volume of the operation
      * @param rSolid1 The name of one of the volume the operation is made on
      * @param rSolid2 The name of a second volume the operation is made on
+     * @param trans A translation applied to the child volume within the parent volume's coordinate system
      */
     struct ShapeOperationInfo {
         ShapeOperationType type;
         std::string name_tag;
         std::string rSolid1;
         std::string rSolid2;
+        Translation trans;
     };
     /**
      * @struct PosInfo
@@ -205,7 +208,6 @@ namespace insur {
         bool fw;
         bool isZPlus;
         bool fw_flipped;
-        double phi;
         int modules;
         double mthk;
         double rmin;
@@ -214,7 +216,9 @@ namespace insur {
         double zmin;
         double zmax;
         double zfw;
+        double startPhiAnglefw;  // in RAD
         double zbw;
+        double startPhiAnglebw;  // in RAD
     };
     /**
      * @struct BTiltedRingInfo
@@ -242,15 +246,16 @@ namespace insur {
         std::string name;
         std::string childname;
         bool isZPlus;
-        double tiltAngle;
+        double tiltAngle;      // in DEG
         bool bw_flipped;
-        bool fw_flipped;
-        double phi;
+        bool fw_flipped;  
         int modules;
         double r1;
         double z1;
+        double startPhiAngle1; // in RAD
         double r2;
         double z2;
+        double startPhiAngle2; // in RAD
         double rmin;
         double rmax;
         double zmin;
